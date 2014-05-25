@@ -58,13 +58,14 @@ None by default.
 
 ### GetModule
 
-__Signature__: (ArrayRef | CodeRef | HashRef | ScalarRef \[, Hash | HashRef \]) -> CodeRef
+__Signature__: (ArrayRef | CodeRef | HashRef | ScalarRef \[, Hash | HashRef \]) -> (Str, Str) -> HashRef
 
     my $sub = GetModule($target, %options);
 
-Takes a target and an optional hash or hashref of [options](#OPTIONS) and returns a subroutine that can be used
-to handle a [Getopt::Long](http://search.cpan.org/perldoc?Getopt::Long) option. The option's value is parsed and its components (module name,
-import type and parameters) are assigned to the target in the following ways.
+Takes a target and an optional hash or hashref of [options](#options) and returns a
+[subroutine](http://search.cpan.org/perldoc?Getopt%3A%3ALong#User-defined_subroutines_to_handle_options) that takes
+an option name and a perl `-M`/`-m`-style option value and assigns the value's components (module name, import type
+and parameters) to the target in the following ways.
 
 #### TARGETS
 
@@ -79,13 +80,13 @@ Command:
 
 Usage:
 
-    my $statements;
+    my $modules;
 
     GetOptions(
-        'M|module=s' => GetModule(\$statements),
+        'M|module=s' => GetModule(\$modules),
     );
 
-Result (`$statements`):
+Result (`$modules`):
 
     "use Foo qw(bar); no Baz qw(quux);"
 
