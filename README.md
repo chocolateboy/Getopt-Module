@@ -27,7 +27,7 @@ Getopt::Module - handle -M and -m options like perl
 ```perl
 
     use Getopt::Long;
-    use Getopt::Module;
+    use Getopt::Module qw(GetModule);
 
     my ($modules, $eval);
 
