@@ -197,7 +197,7 @@ The separator used to separate statements assigned to the scalar-ref target. Def
 
 ## VERSION
 
-0.0.1
+0.0.2
 
 ## SEE ALSO
 

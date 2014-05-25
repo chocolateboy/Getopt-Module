@@ -1,4 +1,4 @@
-Getopt-Module version 0.0.1
+Getopt-Module version 0.0.2
 ===========================
 
 This module provides a convenient way for command-line Perl scripts to handle -M and -m options in the same way as perl.
@@ -11,17 +11,6 @@ To install this module type the following:
    make
    make test
    make install
-
-DEPENDENCIES
-
-This module requires these other modules and libraries:
-
-    Carp
-    constant
-    Data::Dumper
-    Exporter
-    Scalar::Util
-    Test::More
 
 COPYRIGHT AND LICENCE
 

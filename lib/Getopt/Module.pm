@@ -9,7 +9,7 @@ use Carp qw(confess);
 use Exporter qw(import);
 use Scalar::Util;
 
-$VERSION   = '0.0.1';
+$VERSION   = '0.0.2';
 @EXPORT_OK = qw(GetModule);
 
 my $MODULE_RE = qr{
@@ -307,7 +307,7 @@ The separator used to separate statements assigned to the scalar-ref target. Def
 
 =head1 VERSION
 
-0.0.1
+0.0.2
 
 =head1 SEE ALSO
 
