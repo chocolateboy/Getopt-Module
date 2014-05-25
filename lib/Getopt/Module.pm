@@ -27,7 +27,7 @@ sub _isa($$) {
 }
 
 # dump value like Data::Dump/Data::Dumper::Concise
-sub pp($) {
+sub _pp($) {
     my $value = shift;
     require Data::Dumper;
     local $Data::Dumper::Deepcopy = 1;
@@ -46,7 +46,7 @@ sub GetModule($@) {
         $params = shift;
 
         unless (_isa($params, 'HASH')) {
-            confess "invalid parameter; expected HASH or HASHREF, got ", pp(ref($params));
+            confess "invalid parameter; expected HASH or HASHREF, got ", _pp(ref($params));
         }
     } elsif ((@_ % 2) == 0) {
         $params = { @_ };
@@ -63,7 +63,7 @@ sub GetModule($@) {
 
         confess 'invalid option definition: option must target a scalar ("foo=s") or array ("foo=@")'
             unless (defined($value) && (@_ == 0));
-        confess sprintf("invalid value for %s option: %s", $name, pp($value))
+        confess sprintf("invalid value for %s option: %s", $name, _pp($value))
             unless ($value =~ $MODULE_RE);
 
         my ($hyphen, $module, $args_start, $args) = ($1, $2, $3, $4);

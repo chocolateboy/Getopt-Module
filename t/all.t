@@ -10,7 +10,7 @@ use Test::More;
 # (parsing depends on the params passed to GetModule, not the option name)
 use constant OPTION_NAME => 'module';
 
-sub pp($) { Getopt::Module::pp($_[0]) }
+sub pp($) { Getopt::Module::_pp($_[0]) }
 
 =begin comment
 
