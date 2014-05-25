@@ -145,7 +145,7 @@ The coderef is passed 3 parameters:
 
     The option's value as a `use` or `no` statement e.g: "use Foo qw(bar baz);".
 
-- spec <a name="#spec"></a>
+- spec <a name="spec"></a>
 
     A hashref that makes the various components of the option available e.g.:
 
