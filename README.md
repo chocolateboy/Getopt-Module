@@ -163,7 +163,7 @@ The coderef is passed 3 parameters:
     The following hashref would be passed as the third argument to the `process_module` sub:
 
         {
-            args      => 'bar,baz',              # the comma-separated list of import/unimport args; undef if none are supplied
+            args      => 'bar,baz',              # the supplied import/unimport args; undef if none are supplied
             eval      => 'use Foo qw(bar baz);', # the evalable statement representing the option's value
             method    => 'import',               # the method call represented by the statement: either "import" or "unimport"
             module    => 'Foo'                   # the module name
