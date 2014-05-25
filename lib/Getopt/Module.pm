@@ -164,7 +164,7 @@ None by default.
 
 =head2 GetModule
 
-B<Signature>: (ArrayRef | CodeRef | HashRef | ScalarRef [, Hash | HashRef ]) -> (Str, Str) -> HashRef
+B<Signature>: (ArrayRef | CodeRef | HashRef | ScalarRef [, Hash | HashRef ]) -> (Str, Str) -> L<HashRef|/"spec">
 
     my $sub = GetModule($target, %options);
 
@@ -254,6 +254,7 @@ The name of the L<Getopt::Long> option e.g. C<M>.
 The option's value as a C<use> or C<no> statement e.g: "use Foo qw(bar baz);".
 
 =item * spec
+X<spec>
 
 A hashref that makes the various components of the option available e.g.:
 

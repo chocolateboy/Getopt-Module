@@ -58,7 +58,7 @@ None by default.
 
 ### GetModule
 
-__Signature__: (ArrayRef | CodeRef | HashRef | ScalarRef \[, Hash | HashRef \]) -> (Str, Str) -> HashRef
+__Signature__: (ArrayRef | CodeRef | HashRef | ScalarRef \[, Hash | HashRef \]) -> (Str, Str) -> [HashRef](#spec)
 
     my $sub = GetModule($target, %options);
 
@@ -145,7 +145,7 @@ The coderef is passed 3 parameters:
 
     The option's value as a `use` or `no` statement e.g: "use Foo qw(bar baz);".
 
-- spec
+- spec <a name="#spec"></a>
 
     A hashref that makes the various components of the option available e.g.:
 
