@@ -143,20 +143,30 @@ use_ok('Getopt::Module', 'GetModule');
 
 # SCALARREF
 
-is_parsed(\my $scalar1, 'MyModule1', 'use MyModule1;');
-is_parsed(\$scalar1,    'MyModule2', 'use MyModule1; use MyModule2;');
-is_parsed(\my $scalar2, 'MyModule3', 'use MyModule3;');
+my @array = (undef) x 8;
+is_parsed(\$array[0], 'Foo', 'use Foo;');
+is_parsed(\$array[1], '-Foo', 'no Foo;');
+is_parsed(\$array[2], 'Foo=foo,bar', 'use Foo qw(foo bar);');
+is_parsed(\$array[3], '-Foo=foo,bar', 'no Foo qw(foo bar);');
+is_parsed(\$array[4], no_import => 0, 'Foo', 'use Foo;');
+is_parsed(\$array[5], no_import => 1, 'Foo', 'use Foo ();');
+is_parsed(\$array[6], no_import => 0, '-Foo', 'no Foo;');
+is_parsed(\$array[7], no_import => 1, '-Foo', 'no Foo ();');
+
+is_parsed(\my $scalar1, 'Foo', 'use Foo;');
+is_parsed(\$scalar1,    'Foo', 'use Foo; use Foo;');
+is_parsed(\my $scalar2, 'Foo', 'use Foo;');
 
 my $scalar3 = '>';
-is_parsed(\$scalar3, 'MyModule4', '> use MyModule4;');
-is_parsed(\$scalar3, 'MyModule5', '> use MyModule4; use MyModule5;');
+is_parsed(\$scalar3, 'Foo', '> use Foo;');
+is_parsed(\$scalar3, 'Foo', '> use Foo; use Foo;');
 
-is_parsed(\my $scalar4, separator => '|', 'MyModule6', 'use MyModule6;');
-is_parsed(\$scalar4,    separator => '|', 'MyModule7', 'use MyModule6;|use MyModule7;');
+is_parsed(\my $scalar4, separator => '|', 'Foo', 'use Foo;');
+is_parsed(\$scalar4,    separator => '|', 'Foo', 'use Foo;|use Foo;');
 
-is_parsed(\my $scalar5, 'MyModule7=foo', 'use MyModule7 qw(foo);');
-is_parsed(\my $scalar6, 'MyModule7=foo,bar', 'use MyModule7 qw(foo bar);');
-is_parsed(\my $scalar7, 'MyModule7=foo,bar,baz', 'use MyModule7 qw(foo bar baz);');
+is_parsed(\my $scalar5, 'Foo=foo', 'use Foo qw(foo);');
+is_parsed(\my $scalar6, 'Foo=foo,bar', 'use Foo qw(foo bar);');
+is_parsed(\my $scalar7, 'Foo=foo,bar,baz', 'use Foo qw(foo bar baz);');
 
 # ARRAYREF
 

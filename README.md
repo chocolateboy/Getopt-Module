@@ -43,7 +43,7 @@ Getopt::Module - handle -M and -m options like perl
 
 ```bash
 
-    command -MAutobox::Core -MBar=baz,quux -e '$_->split(...)->map(...)->join(...)'
+    command -Mautobox::Core -MBar=baz,quux -e '$_->split(...)->map(...)->join(...)'
 
 ```
 
@@ -60,7 +60,7 @@ None by default.
 
 __Signature__: (ArrayRef | CodeRef | HashRef | ScalarRef \[, Hash | HashRef \]) -> CodeRef
 
-    my $sub = GetModule(\$target, %options);
+    my $sub = GetModule($target, %options);
 
 Takes a target and an optional hash or hashref of [options](#OPTIONS) and returns a subroutine that can be used
 to handle a [Getopt::Long](http://search.cpan.org/perldoc?Getopt::Long) option. The option's value is parsed and its components (module name,
@@ -162,7 +162,7 @@ Command:
 
 Usage:
 
-    my $statements = '';
+    my $statements;
 
     GetOptions(
         'M|module=s' => GetModule(\$statements),
