@@ -143,15 +143,17 @@ use_ok('Getopt::Module', 'GetModule');
 
 # SCALARREF
 
-my @array = (undef) x 8;
+my @array = (undef) x 10;
 is_parsed(\$array[0], 'Foo', 'use Foo;');
 is_parsed(\$array[1], '-Foo', 'no Foo;');
 is_parsed(\$array[2], 'Foo=foo,bar', 'use Foo qw(foo bar);');
 is_parsed(\$array[3], '-Foo=foo,bar', 'no Foo qw(foo bar);');
-is_parsed(\$array[4], no_import => 0, 'Foo', 'use Foo;');
-is_parsed(\$array[5], no_import => 1, 'Foo', 'use Foo ();');
-is_parsed(\$array[6], no_import => 0, '-Foo', 'no Foo;');
-is_parsed(\$array[7], no_import => 1, '-Foo', 'no Foo ();');
+is_parsed(\$array[4], 'Foo { bar => $baz }', 'use Foo { bar => $baz };');
+is_parsed(\$array[5], '-Foo { bar => $baz }', 'no Foo { bar => $baz };');
+is_parsed(\$array[6], no_import => 0, 'Foo', 'use Foo;');
+is_parsed(\$array[7], no_import => 1, 'Foo', 'use Foo ();');
+is_parsed(\$array[8], no_import => 0, '-Foo', 'no Foo;');
+is_parsed(\$array[9], no_import => 1, '-Foo', 'no Foo ();');
 
 is_parsed(\my $scalar1, 'Foo', 'use Foo;');
 is_parsed(\$scalar1,    'Foo', 'use Foo; use Foo;');
@@ -171,11 +173,13 @@ is_parsed(\my $scalar7, 'Foo=foo,bar,baz', 'use Foo qw(foo bar baz);');
 # ARRAYREF
 
 is_parsed([], 'Foo', [ 'use Foo;' ]);
+is_parsed([], '-Foo', [ 'no Foo;' ]);
 is_parsed([], 'Foo=bar', [ 'use Foo qw(bar);' ]);
+is_parsed([], '-Foo=bar', [ 'no Foo qw(bar);' ]);
 is_parsed([], 'Foo=bar,baz', [ 'use Foo qw(bar baz);' ]);
 is_parsed([], '-Foo=bar,baz', [ 'no Foo qw(bar baz);' ]);
-is_parsed([], '-Foo=bar', [ 'no Foo qw(bar);' ]);
-is_parsed([], '-Foo', [ 'no Foo;' ]);
+is_parsed([], 'Foo { bar => $baz }', [ 'use Foo { bar => $baz };' ]);
+is_parsed([], '-Foo { bar => $baz }', [ 'no Foo { bar => $baz };' ]);
 is_parsed([], no_import => 0, 'Foo', [ 'use Foo;' ]);
 is_parsed([], no_import => 1, 'Foo', [ 'use Foo ();' ]);
 is_parsed([], no_import => 1, 'Foo=bar', [ 'use Foo qw(bar);' ]);
@@ -210,6 +214,8 @@ is_parsed($array, no_import => 1, '-Foo',
 
 is_parsed({}, 'Foo', { Foo => [ 'use Foo;' ] });
 is_parsed({}, '-Foo', { Foo => [ 'no Foo;' ] });
+is_parsed({}, 'Foo { bar => $baz }', { Foo => [ 'use Foo { bar => $baz };' ] });
+is_parsed({}, '-Foo { bar => $baz }', { Foo => [ 'no Foo { bar => $baz };' ] });
 is_parsed({}, 'Foo=bar', { Foo => [ 'use Foo qw(bar);' ] });
 is_parsed({}, '-Foo=bar', { Foo => [ 'no Foo qw(bar);' ] });
 is_parsed({}, 'Foo=bar,baz', { Foo => [ 'use Foo qw(bar baz);' ] });
@@ -263,6 +269,26 @@ is_parsed $sub, '-Foo', {
     name      => 'module',
     statement => 'no',
     value     => '-Foo',
+};
+
+is_parsed $sub, 'Foo { bar => $baz }', {
+    args      => '{ bar => $baz }',
+    eval      => 'use Foo { bar => $baz };',
+    method    => 'import',
+    module    => 'Foo',
+    name      => 'module',
+    statement => 'use',
+    value     => 'Foo { bar => $baz }',
+};
+
+is_parsed $sub, '-Foo { bar => $baz }', {
+    args      => '{ bar => $baz }',
+    eval      => 'no Foo { bar => $baz };',
+    method    => 'unimport',
+    module    => 'Foo',
+    name      => 'module',
+    statement => 'no',
+    value     => '-Foo { bar => $baz }',
 };
 
 is_parsed $sub, 'Foo=bar,baz', {
