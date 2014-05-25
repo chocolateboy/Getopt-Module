@@ -185,13 +185,13 @@ Command:
 
 Usage:
 
-    my $statements;
+    my $modules;
 
     GetOptions(
-        'M|module=s' => GetModule(\$statements),
+        'M|module=s' => GetModule(\$modules),
     );
 
-Result (C<$statements>):
+Result (C<$modules>):
 
     "use Foo qw(bar); no Baz qw(quux);"
 
