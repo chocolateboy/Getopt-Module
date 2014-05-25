@@ -12,22 +12,6 @@ use constant OPTION_NAME => 'module';
 
 sub pp($) { Getopt::Module::_pp($_[0]) }
 
-=begin comment
-
-    my $spec = {
-        args      => \@args,
-        eval      => $eval,
-        method    => $method,
-        module    => $module,
-        name      => $name,
-        statement => $statement,
-        value     => $value,
-    };
-
-=end comment
-
-=cut
-
 sub _qw_to_split($) {
     my $evals = shift;
     my $ref = ref($evals);
