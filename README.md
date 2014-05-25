@@ -3,7 +3,7 @@
 - [NAME](#name)
 - [SYNOPSIS](#synopsis)
 - [DESCRIPTION](#description)
-- [EXPORT](#export)
+- [EXPORTS](#exports)
     - [GetModule](#getmodule)
     - [TARGETS](#targets)
         - [ArrayRef](#arrayref)
@@ -52,7 +52,7 @@ Getopt::Module - handle -M and -m options like perl
 This module provides a convenient way for command-line Perl scripts to handle `-M`
 and `-m` options in the same way as perl.
 
-## EXPORT
+## EXPORTS
 
 None by default.
 
@@ -68,9 +68,30 @@ import type and parameters) are assigned to the target in the following ways.
 
 #### TARGETS
 
+##### ScalarRef
+
+`eval`able `use`/`no` statements are appended to the referenced scalar, separated by the ["separator"](#separator) option.
+If no separator is supplied, it defaults to a single space (" ") e.g.:
+
+Command:
+
+    command -MFoo=bar -M-Baz=quux
+
+Usage:
+
+    my $statements;
+
+    GetOptions(
+        'M|module=s' => GetModule(\$statements),
+    );
+
+Result (`$statements`):
+
+    "use Foo qw(bar); no Baz qw(quux);"
+
 ##### ArrayRef
 
-An `eval`able `use` or `no` statement is pushed onto the arrayref e.g.:
+The `use`/`no` statement is pushed onto the arrayref e.g.:
 
 Command:
 
@@ -88,6 +109,29 @@ Result (`$modules`):
 
     [ "use Foo qw(bar baz);", "no Quux;" ]
 
+##### HashRef
+
+Pushes the statement onto the arrayref pointed to by `$hash->{ $module_name }`, creating it if it doesn't exist. e.g.:
+
+Command:
+
+    command -MFoo=bar -M-Foo=baz -MQuux
+
+Usage:
+
+    my $modules = {};
+
+    GetOptions(
+        'M|module=s' => GetModule($modules);
+    );
+
+Result (`$modules`):
+
+    {
+        Foo  => [ "use Foo qw(bar);", "no Foo qw(baz);" ],
+        Quux => [ "use Quux;" ],
+    }
+
 ##### CodeRef
 
 The coderef is passed 3 parameters:
@@ -102,7 +146,7 @@ The coderef is passed 3 parameters:
 
 - spec
 
-    A hashref that makes the various components of the option available separately e.g.:
+    A hashref that makes the various components of the option available e.g.:
 
     Command:
 
@@ -128,50 +172,6 @@ The coderef is passed 3 parameters:
             value     => 'Foo=bar,baz',          # The Getopt::Long option value
         }
 
-##### HashRef
-
-Pushes the statement onto the arrayref pointed to by `$hash->{ $module_name }`, creating it if it doesn't exist. e.g.:
-
-Command:
-
-    command -MFoo=bar -M-Foo=baz -MQuux
-
-Usage:
-
-    my $modules = {};
-
-    GetOptions(
-        'M|module=s' => GetModule($modules);
-    );
-
-Result (`$modules`):
-
-    {
-        Foo  => [ "use Foo qw(bar);", "no Foo qw(baz);" ],
-        Quux => [ "use Quux;" ],
-    }
-
-##### ScalarRef
-
-`use`/`no` statements are appended to the referenced scalar separated by the ["separator"](#separator) option. The referenced scalar
-can be undef. If no separator is supplied, it defaults to a single space (" ") e.g.:
-
-Command:
-
-    command -MFoo=bar -M-Baz=quux
-
-Usage:
-
-    my $statements;
-
-    GetOptions(
-        'M|module=s' => GetModule(\$statements),
-    );
-
-Result (`$statements`):
-
-    "use Foo qw(bar); no Baz qw(quux);"
-
 #### OPTIONS
 
 ##### no\_import
@@ -189,7 +189,7 @@ If no parameters are supplied and `no_import` is set to a true value, the result
 
     use Foo ();
 
-Corresponds to perl's `-m` option.
+This corresponds to perl's `-m` option.
 
 ##### separator
 

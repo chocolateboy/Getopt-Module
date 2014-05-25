@@ -158,7 +158,7 @@ Getopt::Module - handle -M and -m options like perl
 This module provides a convenient way for command-line Perl scripts to handle C<-M>
 and C<-m> options in the same way as perl.
 
-=head1 EXPORT
+=head1 EXPORTS
 
 None by default.
 
@@ -174,9 +174,30 @@ import type and parameters) are assigned to the target in the following ways.
 
 =head3 TARGETS
 
+=head4 ScalarRef
+
+C<eval>able C<use>/C<no> statements are appended to the referenced scalar, separated by the L<"separator"> option.
+If no separator is supplied, it defaults to a single space (" ") e.g.:
+
+Command:
+
+    command -MFoo=bar -M-Baz=quux
+
+Usage:
+
+    my $statements;
+
+    GetOptions(
+        'M|module=s' => GetModule(\$statements),
+    );
+
+Result (C<$statements>):
+
+    "use Foo qw(bar); no Baz qw(quux);"
+
 =head4 ArrayRef
 
-An C<eval>able C<use> or C<no> statement is pushed onto the arrayref e.g.:
+The C<use>/C<no> statement is pushed onto the arrayref e.g.:
 
 Command:
 
@@ -194,6 +215,29 @@ Result (C<$modules>):
 
     [ "use Foo qw(bar baz);", "no Quux;" ]
 
+=head4 HashRef
+
+Pushes the statement onto the arrayref pointed to by C<$hash-E<gt>{ $module_name }>, creating it if it doesn't exist. e.g.:
+
+Command:
+
+    command -MFoo=bar -M-Foo=baz -MQuux
+
+Usage:
+
+    my $modules = {};
+
+    GetOptions(
+        'M|module=s' => GetModule($modules);
+    );
+
+Result (C<$modules>):
+
+    {
+        Foo  => [ "use Foo qw(bar);", "no Foo qw(baz);" ],
+        Quux => [ "use Quux;" ],
+    }
+
 =head4 CodeRef
 
 The coderef is passed 3 parameters:
@@ -210,7 +254,7 @@ The option's value as a C<use> or C<no> statement e.g: "use Foo qw(bar baz);".
 
 =item * spec
 
-A hashref that makes the various components of the option available separately e.g.:
+A hashref that makes the various components of the option available e.g.:
 
 Command:
 
@@ -238,50 +282,6 @@ The following hashref would be passed as the third argument to the C<process_mod
 
 =back
 
-=head4 HashRef
-
-Pushes the statement onto the arrayref pointed to by C<$hash-E<gt>{ $module_name }>, creating it if it doesn't exist. e.g.:
-
-Command:
-
-    command -MFoo=bar -M-Foo=baz -MQuux
-
-Usage:
-
-    my $modules = {};
-
-    GetOptions(
-        'M|module=s' => GetModule($modules);
-    );
-
-Result (C<$modules>):
-
-    {
-        Foo  => [ "use Foo qw(bar);", "no Foo qw(baz);" ],
-        Quux => [ "use Quux;" ],
-    }
-
-=head4 ScalarRef
-
-C<use>/C<no> statements are appended to the referenced scalar separated by the L<"separator"> option. The referenced scalar
-can be undef. If no separator is supplied, it defaults to a single space (" ") e.g.:
-
-Command:
-
-    command -MFoo=bar -M-Baz=quux
-
-Usage:
-
-    my $statements;
-
-    GetOptions(
-        'M|module=s' => GetModule(\$statements),
-    );
-
-Result (C<$statements>):
-
-    "use Foo qw(bar); no Baz qw(quux);"
-
 =head3 OPTIONS
 
 =head4 no_import
@@ -299,7 +299,7 @@ C<import>/C<unimport> method call by passing an empty list e.g:
 
     use Foo ();
 
-Corresponds to perl's C<-m> option.
+This corresponds to perl's C<-m> option.
 
 =head4 separator
 
