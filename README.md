@@ -1,5 +1,8 @@
 # Getopt::Module
 
+[![CPAN version](https://badge.fury.io/pl/Getopt-Module.svg)](http://badge.fury.io/pl/Getopt-Module)
+[![build status](https://secure.travis-ci.org/chocolateboy/Getopt-Module.svg)](http://travis-ci.org/chocolateboy/Getopt-Module)
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
