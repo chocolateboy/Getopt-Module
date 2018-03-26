@@ -229,7 +229,7 @@ Usage:
     my $modules = {};
 
     GetOptions(
-        'M|module=s' => GetModule($modules);
+        'M|module=s' => GetModule($modules),
     );
 
 Result (C<$modules>):
@@ -267,7 +267,7 @@ Usage:
     sub process_module { ... }
 
     GetOptions(
-        'M|module=s' => GetModule(\&process_module);
+        'M|module=s' => GetModule(\&process_module),
     );
 
 The following hashref would be passed as the third argument to the C<process_module> sub:

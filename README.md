@@ -1,75 +1,79 @@
-## Getopt::Module
+# Getopt::Module
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [NAME](#name)
 - [SYNOPSIS](#synopsis)
 - [DESCRIPTION](#description)
 - [EXPORTS](#exports)
-    - [GetModule](#getmodule)
+  - [GetModule](#getmodule)
     - [TARGETS](#targets)
-        - [ScalarRef](#scalarref)
-        - [ArrayRef](#arrayref)
-        - [HashRef](#hashref)
-        - [CodeRef](#coderef)
+      - [ScalarRef](#scalarref)
+      - [ArrayRef](#arrayref)
+      - [HashRef](#hashref)
+      - [CodeRef](#coderef)
+        - [name](#name)
+        - [eval](#eval)
+        - [spec](#spec)
     - [OPTIONS](#options)
-        - [no\_import](#no\_import)
-        - [separator](#separator)
+      - [no_import](#no_import)
+      - [separator](#separator)
 - [VERSION](#version)
 - [SEE ALSO](#see-also)
 - [AUTHOR](#author)
 - [COPYRIGHT AND LICENSE](#copyright-and-license)
 
-## NAME
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# NAME
 
 Getopt::Module - handle -M and -m options like perl
 
-## SYNOPSIS
+# SYNOPSIS
 
 ```perl
+use Getopt::Long;
+use Getopt::Module qw(GetModule);
 
-    use Getopt::Long;
-    use Getopt::Module qw(GetModule);
+my ($modules, $eval);
 
-    my ($modules, $eval);
+GetOptions(
+    'M|module=s' => GetModule(\$modules),
+    'm=s'        => GetModule(\$modules, no_import => 1),
+    'e|eval=s'   => \$eval,
+);
 
-    GetOptions(
-        'M|module=s' => GetModule(\$modules),
-        'm=s'        => GetModule(\$modules, no_import => 1),
-        'e|eval=s'   => \$eval,
-    );
-
-    my $sub = eval "sub { $modules $eval }";
-
+my $sub = eval "sub { $modules $eval }";
 ```
 
-```bash
+    $ command -Mautobox::Core -MBar=baz,quux -e '$_->split(...)->map(...)->join(...)'
 
-    command -Mautobox::Core -MBar=baz,quux -e '$_->split(...)->map(...)->join(...)'
-
-```
-
-## DESCRIPTION
+# DESCRIPTION
 
 This module provides a convenient way for command-line Perl scripts to handle `-M`
 and `-m` options in the same way as perl.
 
-## EXPORTS
+# EXPORTS
 
 None by default.
 
-### GetModule
+## GetModule
 
-__Signature__: (ArrayRef | CodeRef | HashRef | ScalarRef \[, Hash | HashRef \]) -> (Str, Str) -> [HashRef](#spec)
+**Signature**: `(ArrayRef | CodeRef | HashRef | ScalarRef [, Hash | HashRef ]) → (Str, Str) → HashRef`
 
-    my $sub = GetModule($target, %options);
+```perl
+my $sub = GetModule($target, %options);
+```
 
 Takes a target and an optional hash or hashref of [options](#options) and returns a
 [subroutine](http://search.cpan.org/perldoc?Getopt%3A%3ALong#User-defined_subroutines_to_handle_options) that takes
 an option name and a perl `-M`/`-m`-style option value and assigns the value's components (module name, import type
 and parameters) to the target in the following ways.
 
-#### TARGETS
+### TARGETS
 
-##### ScalarRef
+#### ScalarRef
 
 `eval`able `use`/`no` statements are appended to the referenced scalar, separated by the ["separator"](#separator) option.
 If no separator is supplied, it defaults to a single space (" ") e.g.:
@@ -80,17 +84,21 @@ Command:
 
 Usage:
 
-    my $modules;
+```perl
+my $modules;
 
-    GetOptions(
-        'M|module=s' => GetModule(\$modules),
-    );
+GetOptions(
+    'M|module=s' => GetModule(\$modules),
+);
+```
 
 Result (`$modules`):
 
-    "use Foo qw(bar); no Baz qw(quux);"
+```perl
+"use Foo qw(bar); no Baz qw(quux);"
+```
 
-##### ArrayRef
+#### ArrayRef
 
 The `use`/`no` statement is pushed onto the arrayref e.g.:
 
@@ -100,17 +108,21 @@ Command:
 
 Usage:
 
-    my $modules = [];
+```perl
+my $modules = [];
 
-    GetOptions(
-        'M|module=s' => GetModule($modules),
-    );
+GetOptions(
+    'M|module=s' => GetModule($modules),
+);
+```
 
 Result (`$modules`):
 
-    [ "use Foo qw(bar baz);", "no Quux;" ]
+```perl
+[ "use Foo qw(bar baz);", "no Quux;" ]
+```
 
-##### HashRef
+#### HashRef
 
 Pushes the statement onto the arrayref pointed to by `$hash->{ $module_name }`, creating it if it doesn't exist. e.g.:
 
@@ -120,62 +132,70 @@ Command:
 
 Usage:
 
-    my $modules = {};
+```perl
+my $modules = {};
 
-    GetOptions(
-        'M|module=s' => GetModule($modules);
-    );
+GetOptions(
+    'M|module=s' => GetModule($modules),
+);
+```
 
 Result (`$modules`):
 
-    {
-        Foo  => [ "use Foo qw(bar);", "no Foo qw(baz);" ],
-        Quux => [ "use Quux;" ],
-    }
+```perl
+{
+    Foo  => [ "use Foo qw(bar);", "no Foo qw(baz);" ],
+    Quux => [ "use Quux;" ],
+}
+```
 
-##### CodeRef
+#### CodeRef
 
 The coderef is passed 3 parameters:
 
-- name
+##### name
 
-    The name of the [Getopt::Long](http://search.cpan.org/perldoc?Getopt::Long) option e.g. `M`.
+The name of the [Getopt::Long](http://search.cpan.org/perldoc?Getopt::Long) option e.g. `M`.
 
-- eval
+##### eval
 
-    The option's value as a `use` or `no` statement e.g: "use Foo qw(bar baz);".
+The option's value as a `use` or `no` statement e.g: "use Foo qw(bar baz);".
 
-- spec <a name="spec"></a>
+##### spec
 
-    A hashref that makes the various components of the option available e.g.:
+A hashref that makes the various components of the option available e.g.:
 
-    Command:
+Command:
 
-        command -MFoo=bar,baz
+    command -MFoo=bar,baz
 
-    Usage:
+Usage:
 
-        sub process_module { ... }
+```perl
+sub process_module { ... }
 
-        GetOptions(
-            'M|module=s' => GetModule(\&process_module);
-        );
+GetOptions(
+    'M|module=s' => GetModule(\&process_module),
+);
+```
 
-    The following hashref would be passed as the third argument to the `process_module` sub:
+The following hashref would be passed as the third argument to the `process_module` sub:
 
-        {
-            args      => 'bar,baz',              # the import/unimport args; undef if none are supplied
-            eval      => 'use Foo qw(bar baz);', # the evalable statement representing the option's value
-            method    => 'import',               # the method call represented by the statement: either "import" or "unimport"
-            module    => 'Foo'                   # the module name
-            name      => 'M',                    # the Getopt::Long option name
-            statement => 'use',                  # the statement type: either "use" or "no"
-            value     => 'Foo=bar,baz',          # The Getopt::Long option value
-        }
+```perl
+{
+    args      => 'bar,baz',              # the import/unimport args; undef if none are supplied
+    eval      => 'use Foo qw(bar baz);', # the evalable statement representing the option's value
+    method    => 'import',               # the method call represented by the statement: either "import" or "unimport"
+    module    => 'Foo'                   # the module name
+    name      => 'M',                    # the Getopt::Long option name
+    statement => 'use',                  # the statement type: either "use" or "no"
+    value     => 'Foo=bar,baz',          # The Getopt::Long option value
+}
+```
 
-#### OPTIONS
+### OPTIONS
 
-##### no\_import
+#### no_import
 
 By default, if no `import`/`unimport` parameters are supplied e.g.:
 
@@ -183,34 +203,38 @@ By default, if no `import`/`unimport` parameters are supplied e.g.:
 
 the `use`/`no` statement omits the parameter list:
 
-    use Foo;
+```perl
+use Foo;
+```
 
 If no parameters are supplied and `no_import` is set to a true value, the resulting statement disables the
 `import`/`unimport` method call by passing an empty list e.g:
 
-    use Foo ();
+```perl
+use Foo ();
+```
 
 This corresponds to perl's `-m` option.
 
-##### separator
+#### separator
 
 The separator used to separate statements assigned to the scalar-ref target. Default: a single space (" ").
 
-## VERSION
+# VERSION
 
 0.0.2
 
-## SEE ALSO
+# SEE ALSO
 
 - [Getopt::ArgvFile](http://search.cpan.org/perldoc?Getopt::ArgvFile)
 - [Getopt::Long](http://search.cpan.org/perldoc?Getopt::Long)
 - [perlrun](http://search.cpan.org/perldoc?perlrun)
 
-## AUTHOR
+# AUTHOR
 
 chocolateboy <chocolate@cpan.org>
 
-## COPYRIGHT AND LICENSE
+# COPYRIGHT AND LICENSE
 
 Copyright (C) 2014 by chocolateboy
 
