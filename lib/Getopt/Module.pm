@@ -329,10 +329,7 @@ chocolateboy <chocolate@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2014 by chocolateboy
+Copyright (c) 2014 by chocolateboy.
 
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.14.2 or,
-at your option, any later version of Perl 5 you may have available.
-
-=cut
+This is free software; you can redistribute it and/or modify it under the
+terms of the Artistic License 2.0.
