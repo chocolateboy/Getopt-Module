@@ -2,7 +2,6 @@
 
 [![Build Status](https://secure.travis-ci.org/chocolateboy/Getopt-Module.svg)](http://travis-ci.org/chocolateboy/Getopt-Module)
 [![CPAN Version](https://badge.fury.io/pl/Getopt-Module.svg)](http://badge.fury.io/pl/Getopt-Module)
-[![License](https://img.shields.io/badge/license-artistic-blue.svg)](https://github.com/chocolateboy/Getopt-Module/blob/master/LICENSE.md)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
