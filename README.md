@@ -70,7 +70,7 @@ my $sub = GetModule($target, %options);
 ```
 
 Takes a target and an optional hash or hashref of [options](#options) and returns a
-[subroutine](http://search.cpan.org/perldoc?Getopt%3A%3ALong#User-defined_subroutines_to_handle_options) that takes
+[subroutine](https://metacpan.org/pod/Getopt::Long#User-defined-subroutines-to-handle-options) that takes
 an option name and a perl `-M`/`-m`-style option value and assigns the value's components (module name, import type
 and parameters) to the target in the following ways.
 
@@ -158,7 +158,7 @@ The coderef is passed 3 parameters:
 
 ##### name
 
-The name of the [Getopt::Long](http://search.cpan.org/perldoc?Getopt::Long) option e.g. `M`.
+The name of the [Getopt::Long](https://metacpan.org/pod/Getopt::Long) option e.g. `M`.
 
 ##### eval
 
@@ -229,9 +229,9 @@ The separator used to separate statements assigned to the scalar-ref target. Def
 
 # SEE ALSO
 
-- [Getopt::ArgvFile](http://search.cpan.org/perldoc?Getopt::ArgvFile)
-- [Getopt::Long](http://search.cpan.org/perldoc?Getopt::Long)
-- [perlrun](http://search.cpan.org/perldoc?perlrun)
+- [Getopt::ArgvFile](https://metacpan.org/pod/Getopt::ArgvFile)
+- [Getopt::Long](https://metacpan.org/pod/Getopt::Long)
+- [perlrun](https://metacpan.org/pod/perlrun)
 
 # AUTHOR
 

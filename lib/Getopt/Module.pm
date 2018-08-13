@@ -169,7 +169,7 @@ B<Signature>: (ArrayRef | CodeRef | HashRef | ScalarRef [, Hash | HashRef ]) -> 
     my $sub = GetModule($target, %options);
 
 Takes a target and an optional hash or hashref of L<options|/"OPTIONS"> and returns a
-L<subroutine|http://search.cpan.org/perldoc?Getopt%3A%3ALong#User-defined_subroutines_to_handle_options>
+L<subroutine|https://metacpan.org/pod/Getopt::Long#User-defined-subroutines-to-handle-options>
 that takes an option name and a perl C<-M>/C<-m>-style option value and assigns the value's components
 (module name, import type and parameters) to the target in the following ways.
 
