@@ -235,11 +235,11 @@ The separator used to separate statements assigned to the scalar-ref target. Def
 
 # AUTHOR
 
-chocolateboy <chocolate@cpan.org>
+[chocolateboy](mailto:chocolate@cpan.org)
 
 # COPYRIGHT AND LICENSE
 
-Copyright © 2014 by chocolateboy.
+Copyright © 2014-2018 by chocolateboy.
 
 This is free software; you can redistribute it and/or modify it under the
 terms of the [Artistic License 2.0](http://www.opensource.org/licenses/artistic-license-2.0.php).
