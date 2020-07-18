@@ -254,6 +254,7 @@ The name of the L<Getopt::Long> option e.g. C<M>.
 The option's value as a C<use> or C<no> statement e.g: "use Foo qw(bar baz);".
 
 =item * spec
+
 X<spec>
 
 A hashref that makes the various components of the option available e.g.:
@@ -329,9 +330,9 @@ chocolateboy <chocolate@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2014 by chocolateboy.
+Copyright (c) 2014-2020 by chocolateboy.
 
 This library is free software; you can redistribute it and/or modify it under the
-terms of the L<Artistic License 2.0|http://www.opensource.org/licenses/artistic-license-2.0.php>.
+terms of the L<Artistic License 2.0|https://www.opensource.org/licenses/artistic-license-2.0.php>.
 
 =cut

@@ -25,8 +25,8 @@ WriteMakefile(
                     'Test::More' => 0,
                 },
                 resources => {
-                    repository => 'http://github.com/chocolateboy/Getopt-Module',
-                    bugtracker => 'http://github.com/chocolateboy/Getopt-Module/issues',
+                    repository => 'https://github.com/chocolateboy/Getopt-Module',
+                    bugtracker => 'https://github.com/chocolateboy/Getopt-Module/issues',
                 },
             }
         )

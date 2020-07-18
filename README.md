@@ -1,10 +1,9 @@
 # Getopt::Module
 
-[![Build Status](https://secure.travis-ci.org/chocolateboy/Getopt-Module.svg)](http://travis-ci.org/chocolateboy/Getopt-Module)
-[![CPAN Version](https://badge.fury.io/pl/Getopt-Module.svg)](http://badge.fury.io/pl/Getopt-Module)
+[![Build Status](https://travis-ci.org/chocolateboy/Getopt-Module.svg)](https://travis-ci.org/chocolateboy/Getopt-Module)
+[![CPAN Version](https://badge.fury.io/pl/Getopt-Module.svg)](https://badge.fury.io/pl/Getopt-Module)
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+<!-- toc -->
 
 - [NAME](#name)
 - [SYNOPSIS](#synopsis)
@@ -27,7 +26,7 @@
 - [AUTHOR](#author)
 - [COPYRIGHT AND LICENSE](#copyright-and-license)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- tocstop -->
 
 # NAME
 
@@ -54,8 +53,8 @@ my $sub = eval "sub { $modules $eval }";
 
 # DESCRIPTION
 
-This module provides a convenient way for command-line Perl scripts to handle `-M`
-and `-m` options in the same way as perl.
+This module provides a convenient way for command-line Perl scripts to handle
+`-M` and `-m` options in the same way as perl.
 
 # EXPORTS
 
@@ -69,17 +68,20 @@ None by default.
 my $sub = GetModule($target, %options);
 ```
 
-Takes a target and an optional hash or hashref of [options](#options) and returns a
-[subroutine](https://metacpan.org/pod/Getopt::Long#User-defined-subroutines-to-handle-options) that takes
-an option name and a perl `-M`/`-m`-style option value and assigns the value's components (module name, import type
-and parameters) to the target in the following ways.
+Takes a target and an optional hash or hashref of [options](#options) and
+returns a
+[subroutine](https://metacpan.org/pod/Getopt::Long#User-defined-subroutines-to-handle-options)
+that takes an option name and a perl `-M`/`-m`-style option value and assigns
+the value's components (module name, import type and parameters) to the target
+in the following ways.
 
 ### TARGETS
 
 #### ScalarRef
 
-`eval`able `use`/`no` statements are appended to the referenced scalar, separated by the ["separator"](#separator) option.
-If no separator is supplied, it defaults to a single space (" ") e.g.:
+`eval`able `use`/`no` statements are appended to the referenced scalar,
+separated by the ["separator"](#separator) option. If no separator is supplied,
+it defaults to a single space (" "), e.g.:
 
 Command:
 
@@ -103,7 +105,7 @@ Result (`$modules`):
 
 #### ArrayRef
 
-The `use`/`no` statement is pushed onto the arrayref e.g.:
+The `use`/`no` statement is pushed onto the arrayref, e.g.:
 
 Command:
 
@@ -127,7 +129,8 @@ Result (`$modules`):
 
 #### HashRef
 
-Pushes the statement onto the arrayref pointed to by `$hash->{ $module_name }`, creating it if it doesn't exist. e.g.:
+Pushes the statement onto the arrayref pointed to by `$hash->{ $module_name }`,
+creating it if it doesn't exist, e.g.:
 
 Command:
 
@@ -158,7 +161,7 @@ The coderef is passed 3 parameters:
 
 ##### name
 
-The name of the [Getopt::Long](https://metacpan.org/pod/Getopt::Long) option e.g. `M`.
+The name of the [Getopt::Long](https://metacpan.org/pod/Getopt::Long) option, e.g. `M`.
 
 ##### eval
 
@@ -166,7 +169,7 @@ The option's value as a `use` or `no` statement e.g: "use Foo qw(bar baz);".
 
 ##### spec
 
-A hashref that makes the various components of the option available e.g.:
+A hashref that makes the various components of the option available, e.g.:
 
 Command:
 
@@ -200,7 +203,7 @@ The following hashref would be passed as the third argument to the `process_modu
 
 #### no_import
 
-By default, if no `import`/`unimport` parameters are supplied e.g.:
+By default, if no `import`/`unimport` parameters are supplied, e.g.:
 
     command -MFoo
 
@@ -210,8 +213,9 @@ the `use`/`no` statement omits the parameter list:
 use Foo;
 ```
 
-If no parameters are supplied and `no_import` is set to a true value, the resulting statement disables the
-`import`/`unimport` method call by passing an empty list e.g:
+If no parameters are supplied and `no_import` is set to a true value, the
+resulting statement disables the `import`/`unimport` method call by passing an
+empty list e.g:
 
 ```perl
 use Foo ();
@@ -221,7 +225,8 @@ This corresponds to perl's `-m` option.
 
 #### separator
 
-The separator used to separate statements assigned to the scalar-ref target. Default: a single space (" ").
+The separator used to separate statements assigned to the scalar-ref target.
+Default: a single space (" ").
 
 # VERSION
 
@@ -239,7 +244,7 @@ The separator used to separate statements assigned to the scalar-ref target. Def
 
 # COPYRIGHT AND LICENSE
 
-Copyright © 2014-2018 by chocolateboy.
+Copyright © 2014-2020 by chocolateboy.
 
 This is free software; you can redistribute it and/or modify it under the
-terms of the [Artistic License 2.0](http://www.opensource.org/licenses/artistic-license-2.0.php).
+terms of the [Artistic License 2.0](https://www.opensource.org/licenses/artistic-license-2.0.php).
