@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/chocolateboy/Getopt-Module.svg)](https://travis-ci.org/chocolateboy/Getopt-Module)
 [![CPAN Version](https://badge.fury.io/pl/Getopt-Module.svg)](https://badge.fury.io/pl/Getopt-Module)
 
-<!-- toc -->
+<!-- TOC -->
 
 - [NAME](#name)
 - [SYNOPSIS](#synopsis)
@@ -15,9 +15,9 @@
       - [ArrayRef](#arrayref)
       - [HashRef](#hashref)
       - [CodeRef](#coderef)
-        - [name](#name)
+        - [name](#name-1)
         - [eval](#eval)
-        - [spec](#spec)
+        - [parsed](#parsed)
     - [OPTIONS](#options)
       - [no_import](#no_import)
       - [separator](#separator)
@@ -26,7 +26,7 @@
 - [AUTHOR](#author)
 - [COPYRIGHT AND LICENSE](#copyright-and-license)
 
-<!-- tocstop -->
+<!-- TOC END -->
 
 # NAME
 
@@ -71,7 +71,7 @@ my $sub = GetModule($target, %options);
 Takes a target and an optional hash or hashref of [options](#options) and
 returns a
 [subroutine](https://metacpan.org/pod/Getopt::Long#User-defined-subroutines-to-handle-options)
-that takes an option name and a perl `-M`/`-m`-style option value and assigns
+which takes an option name and a perl `-M`/`-m`-style option value and assigns
 the value's components (module name, import type and parameters) to the target
 in the following ways.
 
@@ -157,7 +157,7 @@ Result (`$modules`):
 
 #### CodeRef
 
-The coderef is passed 3 parameters:
+The coderef is passed 3 arguments:
 
 ##### name
 
@@ -165,11 +165,11 @@ The name of the [Getopt::Long](https://metacpan.org/pod/Getopt::Long) option, e.
 
 ##### eval
 
-The option's value as a `use` or `no` statement e.g: "use Foo qw(bar baz);".
+The option's value as a `use` or `no` statement, e.g.: "use Foo qw(bar baz);".
 
-##### spec
+##### parsed
 
-A hashref that makes the various components of the option available, e.g.:
+A hashref containing the option's parsed components, e.g.:
 
 Command:
 
@@ -178,14 +178,14 @@ Command:
 Usage:
 
 ```perl
-sub process_module { ... }
+sub callback { ... }
 
 GetOptions(
-    'M|module=s' => GetModule(\&process_module),
+    'M|module=s' => GetModule(\&callback),
 );
 ```
 
-The following hashref would be passed as the third argument to the `process_module` sub:
+The following hashref would be passed as the third argument to the `callback` sub:
 
 ```perl
 {
@@ -215,7 +215,7 @@ use Foo;
 
 If no parameters are supplied and `no_import` is set to a true value, the
 resulting statement disables the `import`/`unimport` method call by passing an
-empty list e.g:
+empty list, e.g.:
 
 ```perl
 use Foo ();

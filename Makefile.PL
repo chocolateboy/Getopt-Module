@@ -14,8 +14,9 @@ WriteMakefile(
         'Data::Dumper' => 0,
         'Exporter'     => 0,
         'Scalar::Util' => 0,
+        'version'      => '0.77',
     },
-    ABSTRACT_FROM => 'lib/Getopt/Module.pm',
+    ABSTRACT_FROM => 'lib/Getopt/Module.pod',
     AUTHOR        => 'chocolateboy <chocolate@cpan.org>',
     ($EUMM_VERSION >= 6.31 ? (LICENSE => 'perl') : ()),
     ($EUMM_VERSION >= 6.46 ?
