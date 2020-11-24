@@ -15,9 +15,6 @@
       - [ArrayRef](#arrayref)
       - [HashRef](#hashref)
       - [CodeRef](#coderef)
-        - [name](#name-1)
-        - [eval](#eval)
-        - [parsed](#parsed)
     - [OPTIONS](#options)
       - [no_import](#no_import)
       - [separator](#separator)
@@ -159,14 +156,17 @@ Result (`$modules`):
 
 The coderef is passed 3 arguments:
 
+<!-- TOC:ignore -->
 ##### name
 
 The name of the [Getopt::Long](https://metacpan.org/pod/Getopt::Long) option, e.g. `M`.
 
+<!-- TOC:ignore -->
 ##### eval
 
 The option's value as a `use` or `no` statement, e.g.: "use Foo qw(bar baz);".
 
+<!-- TOC:ignore -->
 ##### parsed
 
 A hashref containing the option's parsed components, e.g.:
