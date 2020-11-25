@@ -11,7 +11,7 @@ use Scalar::Util;
 
 # XXX this declaration must be on a single line
 # https://metacpan.org/pod/version#How-to-declare()-a-dotted-decimal-version
-use version; our $VERSION = version->declare('v0.0.2');
+use version; our $VERSION = version->declare('v1.0.0');
 
 @EXPORT_OK = qw(GetModule);
 

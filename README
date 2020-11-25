@@ -1,4 +1,4 @@
-Getopt-Module version 0.0.2
+Getopt-Module version 1.0.0
 ===========================
 
 This module provides a convenient way for command-line Perl scripts to handle -M and -m options in the same way as perl.
