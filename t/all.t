@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use Carp qw(confess);
-use Test::More;
+use Test::More tests => 359;
 
 # arbitrary Getopt::Long option name
 # (parsing depends on the params passed to GetModule, not the option name)
@@ -337,5 +337,3 @@ is_parsed $sub, no_import => 1, '-Foo', {
     statement => 'no',
     value     => '-Foo',
 };
-
-done_testing;

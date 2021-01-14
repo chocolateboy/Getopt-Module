@@ -1,6 +1,6 @@
 # Getopt::Module
 
-[![Build Status](https://travis-ci.org/chocolateboy/Getopt-Module.svg)](https://travis-ci.org/chocolateboy/Getopt-Module)
+[![Build Status](https://github.com/chocolateboy/Getopt-Module/workflows/test/badge.svg)](https://github.com/chocolateboy/Getopt-Module/actions?query=workflow%3Atest)
 [![CPAN Version](https://badge.fury.io/pl/Getopt-Module.svg)](https://badge.fury.io/pl/Getopt-Module)
 
 <!-- TOC -->
